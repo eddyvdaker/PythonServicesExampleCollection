@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  postgres:
+    image: "postgres:15.4-alpine"
+    environment:
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "db"
+    ports:
+      - "127.0.0.1:5432:5432"
+    networks:
+      - postgresExample
+
+  python:
+    build: .
+    depends_on:
+      - postgres
+    networks:
+      - "postgresExample"
+
+networks:
+  postgresExample:
